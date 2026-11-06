@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veda Security — Cyber Defense & Learning Academy</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #070913;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --accent: #06b6d4;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --border: rgba(139, 92, 246, 0.25);
+      --danger: #ef4444;
+      --success: #10b981;
+      --telegram: #229ED9;
+      --discord: #5865F2;
+      --razorpay: #072654;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .glass {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(7, 9, 19, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand i { color: var(--accent); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-main);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      background: rgba(139, 92, 246, 0.2);
+      color: #fff;
+    }
+
+    /* HERO COVER */
+    .hero-section {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1rem;
+      overflow: hidden;
+    }
+
+    #heroCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 850px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-sub);
+      margin-bottom: 2rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    .btn-action {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: #fff;
+      padding: 0.75rem 1.6rem;
+      border-radius: 10px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-action:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+    }
+
+    .btn-pay {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+    }
+
+    .btn-telegram { background: var(--telegram); }
+    .btn-discord { background: var(--discord); }
+
+    /* LAYOUT CONTAINERS */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .section-block {
+      margin-bottom: 4rem;
+      scroll-margin-top: 100px;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.6);
+      color: #fff;
+      margin-bottom: 2rem;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    /* PAYWALL & LIVE CLASS */
+    .paywall-card {
+      padding: 3rem 2rem;
+      text-align: center;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(239, 68, 68, 0.05) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .lock-icon {
+      font-size: 3.5rem;
+      color: var(--danger);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    #videoPlayer {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+    }
+
+    /* TUTORIAL YOUTUBE GRID */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .video-card {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+    }
+
+    .thumbnail-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      overflow: hidden;
+    }
+
+    .thumbnail-wrapper img {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .video-card:hover .thumbnail-wrapper img { transform: scale(1.05); }
+
+    .play-btn-overlay {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px; height: 50px;
+      background: rgba(239, 68, 68, 0.9);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.2rem;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+    }
+
+    .video-info {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .video-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-body {
+      width: 90%;
+      max-width: 900px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -40px; right: 0;
+      background: none; border: none;
+      color: #fff; font-size: 2rem; cursor: pointer;
+    }
+
+    .responsive-iframe {
+      position: relative;
+      padding-top: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .responsive-iframe iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border: none;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      margin-top: 4rem;
+      text-align: center;
+      color: var(--text-sub);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.4rem; }
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%; left: 0;
+        background: rgba(7, 9, 19, 0.98);
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.active { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="brand">
+      <i class="fa-solid fa-shield-halved"></i> Veda Security
+    </div>
+    <button class="nav-toggle" onclick="toggleNav()"><i class="fa-solid fa-bars"></i></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" onclick="closeNav()">Home</a></li>
+      <li><a href="#live" onclick="closeNav()">🔴 Live Stream</a></li>
+      <li><a href="#videos" onclick="closeNav()">🎬 Free Tutorials</a></li>
+      <li><a href="#help" onclick="closeNav()">💬 Help Centre</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO COVER SECTION -->
+  <section class="hero-section" id="home">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fa-solid fa-lock"></i> Premium Cyber Security Platform
+      </div>
+      <h1 class="hero-title">Veda Security Academy</h1>
+      <p class="hero-subtitle">Access free tutorials or enroll in our premium cybersecurity course to unlock exclusive live streams and direct instructor guidance.</p>
+      <div class="hero-btns">
+        <a href="https://rzp.io/rzp/MxBpOewq" target="_blank" class="btn-action btn-pay">
+          <i class="fa-solid fa-credit-card"></i> Buy Course to Unlock Live
+        </a>
+        <a href="https://t.me/+VIG47x9kaJYyODE9" target="_blank" class="btn-action btn-telegram">
+          <i class="fa-brands fa-telegram"></i> Telegram Notifications
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- SEARCH BOX FOR YOUTUBE VIDEOS -->
+    <input type="text" id="videoSearch" class="search-box" placeholder="🔍 Search Free YouTube Tutorials..." oninput="filterVideos()">
+
+    <!-- LIVE CLASS SECTION (PAYWALL ENFORCED) -->
+    <section class="section-block" id="live">
+      <div class="section-title">
+        <i class="fa-solid fa-tower-broadcast" style="color: var(--danger);"></i> 🔴 Premium Live Class
+      </div>
+
+      <!-- LOCKED PAYWALL STATE -->
+      <div class="glass paywall-card" id="paywallContainer">
+        <div class="lock-icon">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h2 style="color: #fff;">Course Enrollment Required</h2>
+        <p style="color: var(--text-sub); max-width: 580px;">
+          To access the live interactive sessions, you must purchase the premium course. Stream notifications and schedules are regularly announced in our Telegram channel.
+        </p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem;">
+          <a href="https://rzp.io/rzp/MxBpOewq" target="_blank" class="btn-action btn-pay">
+            <i class="fa-solid fa-bag-shopping"></i> Buy Course to Unlock Live Class
+          </a>
+          <a href="https://t.me/+VIG47x9kaJYyODE9" target="_blank" class="btn-action btn-telegram">
+            <i class="fa-brands fa-telegram"></i> Telegram Notifications
+          </a>
+        </div>
+        <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-sub);">
+          <span>Already paid or need payment verification?</span>
+          <br>
+          <a href="https://discord.com/invite/JRq99sN56" target="_blank" style="color: var(--discord); font-weight: 600;">
+            <i class="fa-brands fa-discord"></i> Verify Payment on Discord Help Centre
+          </a>
+        </div>
+        <button onclick="unlockLivePlayer()" style="margin-top:0.5rem; background:none; border:none; color:var(--accent); cursor:pointer; text-decoration:underline; font-size:0.8rem;">
+          (Simulate Payment Access)
+        </button>
+      </div>
+
+      <!-- UNLOCKED LIVE PLAYER (HIDDEN BY DEFAULT) -->
+      <div class="glass" id="unlockedPlayerContainer" style="display: none; padding: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <span style="color: var(--success); font-weight: 700;"><i class="fa-solid fa-circle-check"></i> Course Unlocked</span>
+          <span style="color: var(--danger); font-size: 0.9rem; font-weight: 600;"><i class="fa-solid fa-circle"></i> Live Streaming Active</span>
+        </div>
+        <div class="video-wrapper">
+          <video id="videoPlayer" controls></video>
+        </div>
+      </div>
+    </section>
+
+    <!-- FREE YOUTUBE TUTORIALS SECTION -->
+    <section class="section-block" id="videos">
+      <div class="section-title">
+        <i class="fa-brands fa-youtube" style="color: #ef4444;"></i> 🎬 Free Security Tutorials
+      </div>
+      <div class="grid-layout" id="videoGrid"></div>
+    </section>
+
+    <!-- HELP CENTRE & COMMUNITY SECTION -->
+    <section class="section-block" id="help">
+      <div class="glass" style="padding: 3rem 2rem; text-align: center;">
+        <div class="section-title" style="justify-content: center;">
+          <i class="fa-solid fa-headset" style="color: var(--accent);"></i> Help Centre & Verification
+        </div>
+        <p style="margin-bottom: 2rem; color: var(--text-sub); max-width: 600px; margin-left: auto; margin-right: auto;">
+          Have you completed your payment or need assistance with access? Join our dedicated Discord Help Centre for quick payment status verification and technical support.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+          <a href="https://discord.com/invite/JRq99sN56" target="_blank" class="btn-action btn-discord">
+            <i class="fa-brands fa-discord"></i> Discord Help Centre & Payment Check
+          </a>
+          <a href="https://t.me/+VIG47x9kaJYyODE9" target="_blank" class="btn-action btn-telegram">
+            <i class="fa-brands fa-telegram"></i> Telegram Stream Alerts
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- VIDEO MODAL PLAYER -->
+  <div class="modal-overlay" id="videoModal">
+    <div class="modal-body">
+      <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+      <div class="responsive-iframe">
+        <iframe id="youtubeIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>Veda Security</strong> — Cyber Security Training & Live Learning</p>
+    <p>&copy; 2026 All Rights Reserved.</p>
+    <div class="footer-links">
+      <a href="https://rzp.io/rzp/MxBpOewq" target="_blank" style="color: var(--accent);">Enroll / Buy Course</a>
+      <a href="https://discord.com/invite/JRq99sN56" target="_blank" style="color: var(--discord);">Discord Help Centre</a>
+      <a href="https://t.me/+VIG47x9kaJYyODE9" target="_blank" style="color: var(--telegram);">Telegram Channel</a>
+    </div>
+  </footer>
+
+  <script>
+    const LIVEPEER_HLS_URL = "https://livepeercdn.studio/hls/b91557omqedsswdu/index.m3u8";
+
+    const videoList = [
+      { id: "2nx_tD--cG0", title: "Ethical Hacking & Penetration Testing Guide" },
+      { id: "xd4JBDKZUe8", title: "Cyber Security Fundamentals & Toolsets" },
+      { id: "rXX-ECwQH1M", title: "Python Automation for Cyber Security" },
+      { id: "NnZzs15oNsw", title: "Advanced Network & System Security" }
+    ];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initCanvasAnimation();
+      renderVideos(videoList);
+    });
+
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    function closeNav() {
+      document.getElementById('navLinks').classList.remove('active');
+    }
+
+    function renderVideos(items) {
+      const grid = document.getElementById('videoGrid');
+      grid.innerHTML = '';
+
+      if (items.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-sub); padding: 2rem;">No tutorials found.</div>`;
+        return;
+      }
+
+      items.forEach(v => {
+        const thumbUrl = `https://img.youtube.com/vi/${v.id}/hqdefault.jpg`;
+        const card = document.createElement('div');
+        card.className = 'glass video-card';
+        card.onclick = () => openVideoModal(v.id);
+        card.innerHTML = `
+          <div class="thumbnail-wrapper">
+            <img src="${thumbUrl}" alt="${v.title}">
+            <div class="play-btn-overlay">
+              <i class="fa-solid fa-play"></i>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">${v.title}</div>
+            <span style="font-size: 0.8rem; color: var(--accent);"><i class="fa-solid fa-circle-play"></i> Watch Free Video</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterVideos() {
+      const query = document.getElementById('videoSearch').value.toLowerCase();
+      const filtered = videoList.filter(v => v.title.toLowerCase().includes(query));
+      renderVideos(filtered);
+    }
+
+    function openVideoModal(videoId) {
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('youtubeIframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      modal.style.display = 'flex';
+    }
+
+    function closeVideoModal() {
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('youtubeIframe');
+      iframe.src = '';
+      modal.style.display = 'none';
+    }
+
+    function unlockLivePlayer() {
+      document.getElementById('paywallContainer').style.display = 'none';
+      document.getElementById('unlockedPlayerContainer').style.display = 'block';
+      initLivePlayer();
+    }
+
+    function initLivePlayer() {
+      const video = document.getElementById('videoPlayer');
+      if (Hls.isSupported()) {
+        const hls = new Hls({ enableWorker: true, lowLatencyMode: true });
+        hls.loadSource(LIVEPEER_HLS_URL);
+        hls.attachMedia(video);
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = LIVEPEER_HLS_URL;
+      }
+    }
+
+    function initCanvasAnimation() {
+      const canvas = document.getElementById('heroCanvas');
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = canvas.parentElement.clientHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = canvas.parentElement.clientHeight;
+      });
+
+      const particles = [];
+      const particleCount = 45;
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.8,
+          vy: (Math.random() - 0.5) * 0.8,
+          radius: Math.random() * 2 + 1
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.fillStyle = 'rgba(6, 182, 212, 0.6)';
+        ctx.strokeStyle = 'rgba(139, 92, 246, 0.15)';
+
+        for (let i = 0; i < particleCount; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          for (let j = i + 1; j < particleCount; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+  </script>
+</body>
+</html>
